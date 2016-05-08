@@ -2,7 +2,7 @@ import logging
 import os
 from gym import error, spaces
 import numpy as np
-from gym.envs.doom import doom_env
+from gym_doom import doom_env
 
 try:
     from doom_py import DoomGame, Mode, Button, GameVariable, ScreenFormat, ScreenResolution, Loader
