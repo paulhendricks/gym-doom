@@ -29,3 +29,8 @@ import gym_doom
 env = gym.make('DoomTakeCover-v0')
 ...
 ```
+
+## Contributors
+
+- ppaquette: Created the original doom-py library and the gym-doom environments
+- gdb: Made doom-py install nicely on OSX; split gym-doom into a separate package
