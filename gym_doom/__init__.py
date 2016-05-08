@@ -1,3 +1,5 @@
+from gym.envs import register
+
 from gym_doom.doom_env import DoomEnv
 from gym_doom.doom_basic import DoomBasicEnv
 from gym_doom.doom_corridor import DoomCorridorEnv

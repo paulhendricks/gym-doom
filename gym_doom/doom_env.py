@@ -3,10 +3,7 @@ import gym
 from gym import error
 from time import sleep
 
-try:
-    import doom_py
-except ImportError as e:
-    raise error.DependencyNotInstalled("{}. (HINT: you can install Doom dependencies with 'pip install gym[doom].)'".format(e))
+import doom_py
 
 logger = logging.getLogger(__name__)
 
