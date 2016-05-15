@@ -30,16 +30,17 @@ class HighLow(Space):
         # For each row: round(random .* (max - min) + min, precision)
         max_minus_min = self.matrix[:, 1] - self.matrix[:, 0]
         random_matrix = np.multiply(max_minus_min, np.random.rand(self.num_rows, 1)) + self.matrix[:, 0]
-        rounded_matrix = np.zeros((self.num_rows, 1))
+        rounded_matrix = np.zeros(self.num_rows)
         for i in range(self.num_rows):
-            rounded_matrix[i, 0] = round(random_matrix[i, 0], int(self.matrix[i, 2]))
+            rounded_matrix[i] = round(random_matrix[i, 0], int(self.matrix[i, 2]))
         return rounded_matrix
 
     def contains(self, x):
-        if (self.num_rows, 1) != x.shape: return False
-        for i in range(self.num_rows):
-            if self.matrix[i, 0] <= x[i, 0] <= self.matrix[i, 1]: continue
+        if x.shape[0] != self.num_rows:
             return False
+        for i in range(self.num_rows):
+            if not (self.matrix[i, 0] <= x[i] <= self.matrix[i, 1]):
+                return False
         return True
 
     def to_jsonable(self, sample_n):
