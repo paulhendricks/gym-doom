@@ -42,6 +42,7 @@ class DoomTakeCoverEnv(doom_env.DoomEnv):
         self.game.set_doom_map('map01')
         self.screen_height = 480                    # Must match .cfg file
         self.screen_width = 640                     # Must match .cfg file
+        # 2 allowed actions [9, 10] (must match .cfg file)
         self.action_space = doom_spaces.HighLow(np.matrix([[0, 1, 0]] * 2))
         self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_height, self.screen_width, 3))
         self.game.set_window_visible(False)
