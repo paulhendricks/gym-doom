@@ -51,3 +51,6 @@ class DoomEnv(gym.Env):
                 sleep(0.02857)  # 35 fps = 0.02857 sleep between frames
         except doom_py.vizdoom.doom_is_not_running_exception:
             pass # Doom has been closed
+
+    def _close(self):
+        self.game.close()
