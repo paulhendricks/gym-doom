@@ -47,11 +47,10 @@ class DoomDefendLineEnv(doom_env.DoomEnv):
         self.game.set_doom_scenario_path(self.loader.get_scenario_path('defend_the_line.wad'))
         self.screen_height = 480                    # Must match .cfg file
         self.screen_width = 640                     # Must match .cfg file
-        self.action_space = doom_spaces.HighLow(np.matrix([[0, 1, 0]] * 36 + [[0, 10, 0]] * 5))
+        # 3 allowed actions [0, 13, 14] (must match .cfg file)
+        self.action_space = doom_spaces.HighLow(np.matrix([[0, 1, 0]] * 3))
         self.observation_space = spaces.Box(low=0, high=255, shape=(self.screen_height, self.screen_width, 3))
-        self.allowed_actions = [0, 13, 14]          # Must match order in .cfg file
         self.game.set_window_visible(False)
         self.viewer = None
-        self.sleep_time = 0.02857                   # 35 fps = 0.02857 sleep between frames
         self.game.init()
         self.game.new_episode()
