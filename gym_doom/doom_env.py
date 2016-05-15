@@ -10,8 +10,8 @@ class DoomEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
     def _step(self, action):
-        # action is a np matrix but DoomGame.make_action expects a list
-        list_action = list(action.flat)
+        # action is a np array but DoomGame.make_action expects a list of ints
+        list_action = [int(x) for x in action]
         try:
             state = self.game.get_state()
             reward = self.game.make_action(list_action)
