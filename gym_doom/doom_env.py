@@ -1,6 +1,5 @@
 import logging
 import gym
-from gym import error
 from time import sleep
 
 import doom_py
@@ -11,20 +10,16 @@ class DoomEnv(gym.Env):
     metadata = {'render.modes': ['human', 'rgb_array']}
 
     def _step(self, action):
-        action = action
-        list_actions = []
-        for i in self.allowed_actions:
-            list_actions.append(int(action[i]))
+        # action is a np matrix but DoomGame.make_action expects a list
+        list_action = list(action.flat)
         try:
             state = self.game.get_state()
-            reward = self.game.make_action(list_actions)
-            if self.sleep_time > 0: sleep(self.sleep_time)
+            reward = self.game.make_action(list_action)
             if self.game.is_episode_finished():
                 is_finished = True
-                self.game.close()
             else:
                 is_finished = False
-            return state.image_buffer.copy(), reward, is_finished, state.game_variables
+            return state.image_buffer.copy(), reward, is_finished, dict(game_variables=state.game_variables)
 
         except doom_py.vizdoom.doom_is_not_running_exception:
             return [], 0, True, {}
@@ -48,5 +43,6 @@ class DoomEnv(gym.Env):
                 if self.viewer is None:
                     self.viewer = rendering.SimpleImageViewer()
                 self.viewer.imshow(img)
+                sleep(0.02857)  # 35 fps = 0.02857 sleep between frames
         except doom_py.vizdoom.doom_is_not_running_exception:
             pass # Doom has been closed
